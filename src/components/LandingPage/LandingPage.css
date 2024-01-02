@@ -1,0 +1,49 @@
+/* LandingPage.css */
+
+/* Style for the page container */
+.page-container {
+    padding: 15px;
+  }
+  
+  /* Style for the main heading */
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for the product selection section */
+  .product-selection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for labels */
+  label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  /* Style for input fields */
+  input {
+    width: 100px;
+    padding: 5px;
+  }
+  
+  /* Style for the "Add to Cart" button */
+  .add-to-cart-button {
+    margin-top: 10px;
+  }
+  
+  /* Style for the shopping cart table */
+  .shopping-cart {
+    margin-top: 20px;
+  }
+  
+  /* Style for the total price */
+  .total-price {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
