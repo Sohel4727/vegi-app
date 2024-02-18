@@ -1,0 +1,24 @@
+.invice_heading {
+  text-align: center;
+  color: red;
+}
+.logo_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.ship_add_container {
+  padding: 10px;
+}
+.amount_container {
+  padding: 10px;
+}
+.single_line_cell {
+  white-space: nowrap;
+}
+.invoice_date{
+    display: flex;
+    justify-content: end;
+    padding: 10px;
+}

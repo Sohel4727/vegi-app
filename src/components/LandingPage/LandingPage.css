@@ -46,4 +46,7 @@
     font-weight: bold;
     margin-top: 10px;
   }
+  .single_line_cell{
+    white-space: nowrap;
+  }
   

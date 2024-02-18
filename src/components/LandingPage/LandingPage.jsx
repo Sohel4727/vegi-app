@@ -1,18 +1,38 @@
 import React, { useState } from "react";
-import { Table, Input, Button, Space, Select, Typography } from "antd";
+import {
+  Table,
+  Input,
+  Button,
+  Space,
+  Select,
+  Typography,
+  DatePicker,
+} from "antd";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { DeleteFilled } from "@ant-design/icons";
 // import "antd/dist/antd.css";
 import "./LandingPage.css";
-
+import BillGenerate from "../BillGenerate/BillGenerate";
+import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
 const LandingPage = () => {
+  const [isBill, setIsBill] = useState(false);
   const [products, setProducts] = useState([
-    { name: "Tomato", price: 0, weight: "" },
-    { name: "Carrot", price: 0, weight: "" },
-    { name: "Cucumber", price: 0, weight: "" },
-    // Add more products with their initial prices and weights here
+    { name: "Kothmir", price: 0, weight: "" },
+    { name: "Pudina", price: 0, weight: "" },
+    { name: "Kadipatta", price: 0, weight: "" },
+    { name: "Kanda", price: 0, weight: "" },
+    { name: "Shimla Mirch", price: 0, weight: "" },
+    { name: "Adrak", price: 0, weight: "" },
+    { name: "Kakdi", price: 0, weight: "" },
+    { name: "Gajar", price: 0, weight: "" },
+    { name: "Hari Mirch", price: 0, weight: "" },
+    { name: "Aalu", price: 0, weight: "" },
+    { name: "Laisan", price: 0, weight: "" },
+    { name: "Patta Gobi", price: 0, weight: "" },
+    { name: "Phool Gobi", price: 0, weight: "" },
+    { name: "Aanar", price: 0, weight: "" },
   ]);
 
   const [selectedProduct, setSelectedProduct] = useState("");
@@ -20,6 +40,11 @@ const LandingPage = () => {
   const [customWeight, setCustomWeight] = useState("");
   const [cart, setCart] = useState([]);
   const [hotelName, setHotelName] = useState("");
+  const [balanceAmount, setBalanceAmount] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [formattedDate, setFormattedDate] = useState("");
+
+  const navigate = useNavigate();
 
   const addToCart = () => {
     if (selectedProduct && customPrice > 0 && customWeight !== "") {
@@ -34,7 +59,7 @@ const LandingPage = () => {
         netPrice,
       };
       setCart([...cart, productToAdd]);
-      console.log("===>", cart);
+      // console.log("===>", cart);
     }
     setCustomPrice("");
     setCustomWeight("");
@@ -67,12 +92,51 @@ const LandingPage = () => {
     setHotelName(value);
   };
 
+  // handle weight with custom values
+
+  const handleWeight = (currentWeight) => {
+    setCustomWeight(currentWeight);
+  };
+  const handleDateChange = (date) => {
+    setSelectedDate(date); // Store the moment object from DatePicker
+    updateFormattedDate(date); // Pass the moment object to updateFormattedDate
+  };
+  
+
+  const updateFormattedDate = (date) => {
+    if (date && date.isValid()) { // Check if date is valid moment object
+      const formatted = date.format("DD-MM-YYYY"); // Format moment object to desired format
+      setFormattedDate(formatted);
+    } else {
+      setFormattedDate(""); // Clear the formatted date if the date is null or not valid
+    }
+  };
+  
+
+  // bill generate
+  const billGenerate = () => {
+    navigate("/billGenerate", {
+      state: {
+        cart: cart,
+        hotelName: hotelName,
+        totalBill: totalBill,
+        balanceAmount: balanceAmount,
+        formattedDate: formattedDate,
+      },
+    });
+  };
+
   const hotels = [
-    "Hotel A",
-    "Hotel B",
-    "Hotel C",
+    "AASHNA HOTEL NANDED",
+    "CHAI SUTTA BAR",
     // Add more hotel names here
   ];
+
+  const weightConversions = {
+    0.25: "250 gm",
+    0.5: "500 gm",
+    0.75: "750 gm",
+  };
 
   const columns = [
     {
@@ -89,32 +153,29 @@ const LandingPage = () => {
       title: "Price",
       dataIndex: "price",
       key: "price",
-      render: (text) => `₹${text.toFixed(2)}`,
+      render: (text) => `₹${text}`,
     },
     {
       title: "Weight",
       dataIndex: "weight",
       key: "weight",
-      render: (text) => `${text} kg`,
+      className: "single_line_cell",
+      render: (text) => weightConversions[text] || `${text} kg`,
     },
     {
       title: "Net_Price",
       dataIndex: "netPrice",
       key: "netPrice",
-      render: (text) => `₹${text.toFixed(2)}`,
+      render: (text) => `₹${text}`,
     },
     {
-      title: "Action",
+      title: "*",
       key: "action",
       render: (text, record) => (
         <DeleteFilled type="danger" onClick={() => deleteItem(record)} />
       ),
     },
   ];
-
-  const pagination = {
-    pageSize: 5, // Display 5 rows per page
-  };
 
   return (
     <div>
@@ -132,6 +193,7 @@ const LandingPage = () => {
             onChange={handleHotelNameChange}
             value={hotelName}
           >
+            <Option value="">Select Hotels</Option>
             {hotels.map((hotel, index) => (
               <Option key={index} value={hotel}>
                 {hotel}
@@ -190,33 +252,69 @@ const LandingPage = () => {
             onChange={(e) => setCustomWeight(e.target.value)}
           />
         </div>
-        <Button type="primary" onClick={addToCart}>
-          Add Product
-        </Button>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: 10,
+          }}
+        >
+          <Button onClick={() => handleWeight(0.25)}>250 gm</Button>
+          <Button onClick={() => handleWeight(0.5)}>500 gm</Button>
+          <Button onClick={() => handleWeight(0.75)}>750 gm</Button>
+          <Button onClick={() => handleWeight(1)}>1 kg</Button>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "8px",
+            marginBottom: "8px",
+          }}
+        >
+          <label>Last Balance : </label>
+          <Input
+            type="number"
+            style={{ width: 200 }}
+            value={balanceAmount}
+            onChange={(e) => setBalanceAmount(e.target.value)}
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "8px",
+            marginBottom: "8px",
+          }}
+        >
+          <label>Date : </label>
+          <DatePicker
+            style={{ width: 200 }}
+            onChange={handleDateChange}
+            value={selectedDate}
+          />
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <Button type="primary" onClick={addToCart}>
+            Add Product
+          </Button>
+          <Button onClick={billGenerate} type="primary">
+            Bill Generate
+          </Button>
+        </div>
       </div>
+   
       <Table
         columns={columns}
         dataSource={cartWithSerialNumbers}
-        pagination={pagination}
+        pagination={false}
       />
-      <div style={{ padding: 10 }}>
-        {cart.length !== 0 && (
-          <Typography style={{ fontWeight: "bold", fontSize: 20 }}>
-            Total Items : {cart.length}
-          </Typography>
-        )}
-        {cart.length !== 0 && (
-          <Typography style={{ fontWeight: "bold", fontSize: 20 }}>
-            Total Price: ₹{totalBill.toFixed(2)}
-          </Typography>
-        )}
-        {cart.length !== 0 && (
-          <Typography style={{ fontWeight: "bold", fontSize: 20 }}>
-            Hotel Name: {hotelName}
-          </Typography>
-        )}
 
-      </div>
+      {isBill ? <BillGenerate /> : null}
     </div>
   );
 };
