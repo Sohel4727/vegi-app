@@ -1,5 +1,5 @@
-import { Button, Table, } from "antd";
-import { DownloadOutlined } from '@ant-design/icons';
+import { Button, Divider, Table } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 import React, { useRef } from "react";
 import logo from "../../Asset/ssLogo.jpg";
 import "./BillGenerate.css";
@@ -32,7 +32,7 @@ const BillGenerate = () => {
   };
   const columns = [
     {
-      title: "Serial",
+      title: "Sr",
       dataIndex: "serial",
       key: "serial",
     },
@@ -40,6 +40,7 @@ const BillGenerate = () => {
       title: "Product",
       dataIndex: "name",
       key: "name",
+      className: "single_line_cell",
     },
     {
       title: "Price",
@@ -58,6 +59,7 @@ const BillGenerate = () => {
       title: "Net_Price",
       dataIndex: "netPrice",
       key: "netPrice",
+      className: "net_price",
       render: (text) => `₹${text}`,
     },
   ];
@@ -95,43 +97,60 @@ const BillGenerate = () => {
             <p>Vegitable Supplier</p>
             <p>Umer Colony, Degloor Naka Nanded</p>
           </div>
-          <img src={logo} width={100} />
+          <img src={logo} width={80} />
         </div>
         <div className="ship_add_container">
           <h3>Ship To</h3>
           {cart.length !== 0 && <p>Hotel Name: {hotelName}</p>}
         </div>
-        <h1 className="invice_heading"> INVOICE </h1>
-        <p className="invoice_date">Date : {formattedDate}</p>
-
-        <Table
-          columns={columns}
-          dataSource={cartWithSerialNumbers}
-          pagination={false}
-        />
+        <div className="invice_heading_container">
+          <p className="invice_heading"> INVOICE </p>
+          <p className="invoice_date">Date : {formattedDate}</p>
+        </div>
+        <div className="custom-table-container">
+          <Table
+            columns={columns}
+            dataSource={cartWithSerialNumbers}
+            pagination={false}
+          />
+        </div>
         <div className="amount_container">
           {cart.length !== 0 && (
-            <p style={{ marginBottom: "15px" }}>Total Items : {cart.length}</p>
+            <div className="billItems_container">
+              <p>Total Items :</p>
+              <p>{cart.length}</p>
+            </div>
           )}
+          <Divider style={{ padding: 2, margin: 2 }}></Divider>
           {cart.length !== 0 && (
-            <p style={{ marginBottom: "15px" }}>
-              Current Bill Amount: ₹{totalBill}
-            </p>
+            <div className="billItems_container">
+              <p>Current Bill Amount: </p>
+              <p>₹{totalBill}</p>
+            </div>
           )}
+          <Divider style={{ padding: 2, margin: 2 }}></Divider>
           {cart.length !== 0 && (
-            <p style={{ marginBottom: "15px" }}>
-              Last Balance Amount : ₹{balanceAmount}
-            </p>
+            <div className="billItems_container">
+              <p>Last Balance Amount : </p>
+              <p>₹{balanceAmount}</p>
+            </div>
           )}
-          {cart.length !== 0 && <p>Total Bill Amount : ₹{totalBillAmount}</p>}
+          <Divider style={{ padding: 2, margin: 2 }}></Divider>
+
+          {cart.length !== 0 && (
+            <div className="billItems_container">
+              <p>Total Bill Amount : </p>
+              <p>₹{totalBillAmount}</p>
+            </div>
+          )}
         </div>
+        <Divider style={{ padding: 2, margin: 2 }}></Divider>
       </div>
       <Button
         onClick={downloadPDF}
         type="primary"
-        style={{ marginTop: "20px" }}
+        style={{ margin: "10px", display: "flex", justifySelf: "center" }}
         icon={<DownloadOutlined />}
-        
       >
         Download
       </Button>

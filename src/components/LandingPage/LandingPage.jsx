@@ -148,6 +148,7 @@ const LandingPage = () => {
       title: "Product",
       dataIndex: "name",
       key: "name",
+      className: "single_line_cell",
     },
     {
       title: "Price",

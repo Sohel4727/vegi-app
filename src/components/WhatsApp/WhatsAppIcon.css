@@ -1,0 +1,65 @@
+WhatsAppIcon.css
+.whatsApp_wrapper {
+    position: fixed;
+    bottom: 20px; /* Adjust the distance from the bottom as needed */
+    right: 20px; /* Adjust the distance from the right as needed */
+    display: inline-flex;
+    list-style: none;
+  }
+  
+  .whatsApp_wrapper .icon {
+    position: relative;
+    background: #ffffff;
+    border-radius: 50%;
+    padding: 15px;
+    margin: 10px;
+    width: 80px !important; /* Initial size of the icon */
+    height: 80px !important; /* Initial size of the icon */
+    font-size: 40px !important; /* Initial size of the icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .whatsApp_wrapper .icon:hover {
+    transform: scale(1.1); /* Increase the scale of the icon on hover */
+  background-color: #ebebeb93;
+  }
+  
+  .whatsApp_wrapper .tooltip {
+    position: absolute;
+    top: -40px; /* Adjust the distance above the icon */
+    right: calc(100% + 8px); /* Position the tooltip to the right of the icon */
+    font-size: 14px;
+    background: #128C7E; /* Background color related to WhatsApp */
+    color: #ffffff;
+    padding: 5px 8px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1; /* Ensure the tooltip appears above the icon */
+  }
+  
+  .whatsApp_wrapper .tooltip::before {
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 8px;
+    background: #128C7E; /* Background color related to WhatsApp */
+    bottom: 7px;
+    left: 95%;
+    transform: translateY(-50%) rotate(45deg);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .whatsApp_wrapper .icon:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }

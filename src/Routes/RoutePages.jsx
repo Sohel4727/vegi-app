@@ -8,10 +8,10 @@ import BillGenerate from "../components/BillGenerate/BillGenerate";
 const RoutePages = () => {
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <Routes>
         <Route exact path="/" element={<LandingPage />}/>
-        <Route exact path="/history" element={<OrderHistory/>} />
+        {/* <Route exact path="/history" element={<OrderHistory/>} /> */}
         <Route exact path="/billGenerate" element={<BillGenerate/>} />
       </Routes>
       

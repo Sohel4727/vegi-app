@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { CSVLink } from "react-csv";
 import RoutePages from "./Routes/RoutePages";
+import WhatsAppIcon from "./components/WhatsApp/WhatsAppIcon";
+import Call from "./components/Call";
 
 function App() {
   // const [response, setResponse] = useState([]);
@@ -14,7 +16,7 @@ function App() {
   //     console.error("Error fetching data:", error);
   //   }
   // };
-  
+
   // console.log("res",response);
   // const headers = [
   //   { label: "id", key: "id" },
@@ -24,7 +26,9 @@ function App() {
 
   return (
     <>
-    <RoutePages/>
+      <RoutePages/>
+      {/* <WhatsAppIcon /> */}
+      {/* <Call /> */}
       {/* <h1>Hello</h1>
       <button onClick={handleDownload}>Download Data</button>
       <CSVLink data={response} headers={headers} filename={"data.csv"}>
